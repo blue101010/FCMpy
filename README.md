@@ -1,7 +1,6 @@
-# FCMpy: A package for Constructing and Analysing Fuzzy Cognitive Maps in Python. 
-<div align = justify>
+# FCMpy: A package for Constructing and Analysing Fuzzy Cognitive Maps in Python
 
-The fcmpy is Python package for automatically generating causal weights for fuzzy cognitive maps based on qualitative inputs (by using fuzzy logic), optimizing the FCM connection matrix via Machine Learning Algorithms and testing <em>what-if</em> scenarios. The package includes the following submodules:
+The fcmpy is Python package for automatically generating causal weights for fuzzy cognitive maps based on qualitative inputs (by using fuzzy logic), optimizing the FCM connection matrix via Machine Learning Algorithms and testing _what-if_ scenarios. The package includes the following submodules:
 
 * ExpertFcm
 * Simulation
@@ -12,16 +11,16 @@ The fcmpy is Python package for automatically generating causal weights for fuzz
 * Eltcn
 * FCM_MP
 
-Read more about the package at: https://arxiv.org/abs/2111.12749 
+Read more about the package at: <https://arxiv.org/abs/2111.12749>
 
 
-<a href="expert_based_fcm\expert_fcm.md"> The ExpertFcm module </a> includes methods for deriving causal weights of an FCM based on qualitative data. <br> 
-<a href="simulator\simulator.md"> The FcmSimulator module </a> provides methods for running simulations on top of a given FCM structure. <br>
-<a href="intervention\intervention.md"> The FcmIntervention module </a> allows testing what-if scenarios on top of the specified FCMs. <br>
+[The ExpertFcm module](expert_based_fcm/expert_fcm.md) includes methods for deriving causal weights of an FCM based on qualitative data.
+[The FcmSimulator module](simulator/simulator.md) provides methods for running simulations on top of a given FCM structure.
+[The FcmIntervention module](intervention/intervention.md) allows testing what-if scenarios on top of the specified FCMs.
 
 ## Tutorials and documentation
 
-Tutorials and documentation can be found at: https://maxiuw.github.io/fcmpyhtml
+Tutorials and documentation can be found at: <https://maxiuw.github.io/fcmpyhtml>
 
 ## Installation
 
@@ -36,14 +35,14 @@ FCMpy supports Python 3.9 and newer (validated up to Python 3.14). The core libr
 
 Additional functionality lives behind optional extras:
 
-* `pip install "fcmpy[ml]"` &rarr; scikit-learn powered classifiers (`FCM_MP`, parts of `eltcn`).
-* `pip install "fcmpy[viz]"` &rarr; plotting helpers based on matplotlib/seaborn.
-* `pip install "fcmpy[ml-tf]"` &rarr; TensorFlow-backed ELTCN classifier (requires a Python version supported by TensorFlow).
-* `pip install "fcmpy[all]"` &rarr; everything above.
+* `pip install "fcmpy[ml]"` -> scikit-learn powered classifiers (`FCM_MP`, parts of `eltcn`).
+* `pip install "fcmpy[viz]"` -> plotting helpers based on matplotlib/seaborn.
+* `pip install "fcmpy[ml-tf]"` -> TensorFlow-backed ELTCN classifier (requires a Python version supported by TensorFlow).
+* `pip install "fcmpy[all]"` -> everything above.
 
 FCMpy is available on PyPI:
 
-```
+```bash
 pip install fcmpy
 ```
 
@@ -51,7 +50,7 @@ pip install fcmpy
 
 To avoid manual environment management on Python 3.14, use the bundled launcher:
 
-```
+```bash
 python launcher.py --extras ml viz -- --your --fcpm-args
 ```
 
@@ -66,7 +65,7 @@ Pass `--skip-run` to only prepare the environment or `--no-editable` if you just
 
 Alternatively, you can install it from source or develop this package, you can fork and clone this repository then install FCMpy by running:
 
-```
+```bash
 py -m pip install --user --upgrade setuptools wheel
 py setup.py sdist bdist_wheel
 py -m pip install e . 
@@ -74,7 +73,7 @@ py -m pip install e .
 
 You can run the unittest for the package as follows:
 
-```
+```bash
 py -m unittest discover unittests
 ```
 
@@ -84,11 +83,11 @@ Below we present the fast implementation of the library. More specifically, how 
 
 ### Building FCMs based on qualitative inputs using Fuzzy Logic
 
-<b>Step 1: Generate Fuzzy Membership Functions</b>
+### Step 1: Generate Fuzzy Membership Functions
 
 Here we generate triangular fuzzy membership functions for 11 linguistic terms.
 
-```Python
+```python
 from fcmpy import ExpertFcm, FcmSimulator, FcmIntervention 
 
 fcm = ExpertFcm()
@@ -114,7 +113,7 @@ fcm.fuzzy_membership = fcm.automf(method='trimf')
 
 Let's take a look at the generated membership functions.
 
-```Python
+```python
 mfs = fcm.fuzzy_membership
 
 fig = plt.figure(figsize= (10, 5))
@@ -135,17 +134,16 @@ plt.tight_layout()
 
 ![png](/figures/mfs.png)
 
-<b>Step 2: Build FCMs based on qualitative input data using Fuzzy Logic</b>
-
+### Step 2: Build FCMs based on qualitative input data using Fuzzy Logic
 
 * Read data from a csv file.
 
-```Python
+```python
 data = fcm.read_data(file_path= os.path.abspath('../unittests/test_cases/data_test.csv'), 
                       sep_concept='->', csv_sep=';')
 ```
 
-```Python
+```python
 Output[1]
 
 OrderedDict([('Expert0',
@@ -188,11 +186,11 @@ OrderedDict([('Expert0',
 
 * Calculate the entropy of the expert ratings.
 
-```Python
+```python
 entropy = fcm.entropy(data)
 ```
 
-```Python
+```python
 Output[2]
 
 Entropy
@@ -207,11 +205,11 @@ C3	    C1	1.251629
 
 Here we build FCM based on the qualitative input data using Larsen's implication method, family maximum aggregation method and the centroid defuzzification method.
 
-```Python
+```python
 weight_matrix = fcm.build(data=data, implication_method='Larsen')
 ```
 
-```Python
+```python
 Output[3]
         C2	        C1      	C4
 C2	0.000000	0.610116	0.000000
@@ -225,13 +223,13 @@ In this example we will replicate the case presented in the fcm inference packag
 
 * Instantiate and FcmSimulator class
 
-```Python
+```python
 sim = FcmSimulator()
 ```
 
 * Define the FCM structure
 
-```Python
+```python
 import pandas as pd
 
 C1 = [0.0, 0.0, 0.6, 0.9, 0.0, 0.0, 0.0, 0.8]
@@ -249,7 +247,7 @@ weight_matrix = pd.DataFrame([C1,C2, C3, C4, C5, C6, C7, C8],
 
 * Define the initial state vector
 
-```Python
+```python
 init_state = {'C1': 1, 'C2': 1, 'C3': 0, 'C4': 0, 'C5': 0,
                     'C6': 0, 'C7': 0, 'C8': 0}
 ```
@@ -258,16 +256,17 @@ init_state = {'C1': 1, 'C2': 1, 'C3': 0, 'C4': 0, 'C5': 0,
 
 Here we run a simulation on top of the defined FCM structure using the sigmoid transfer function and the modified Kosko's inference method. The simulation will run $50$ iterations and will stop if the absolute difference between the concept values between the simulation steps is $\leq 0.001$. The steepness parameter for the sigmoid function is set to $1$. 
 
-```Python
+```python
 res_mK = sim.simulate(initial_state=init_state, weight_matrix=weight_matrix, transfer='sigmoid', inference='mKosko', thresh=0.001, iterations=50, l=1)
 ```
-```Python
+
+```python
 Output[4]
 
 The values converged in the 7 state (e <= 0.001)
 ```
 
-```Python
+```python
 Output[5]
 
         C1	        C2          C3	        C4	        C5	        C6	        C7	        C8
@@ -280,7 +279,7 @@ Output[5]
 6	0.725885	0.790706	0.769451	0.812473	0.819294	0.839901	0.909940	0.955774
 ```
 
-```Python
+```python
 plt.figure()
 res_mK.plot(figsize=(15, 10))
 plt.legend(bbox_to_anchor=(0.97, 0.94))
@@ -292,7 +291,7 @@ plt.show()
 
 ![png](/figures/simulations.png)
 
-<em>Figure 1:</em> The results of the FCM simulation. <br>
+_Figure 1:_ The results of the FCM simulation.
 
 ### Test Interventions on top of the defined FCMs
 
@@ -305,12 +304,12 @@ inter = FcmIntervention(FcmSimulator)
 
 Now we need to create a baseline for testing our interventions. We do so my using the FcmIntervention.initialize() method.
 
-```Python
+```python
 inter.initialize(initial_state=init_state, weight_matrix=weight_matrix, 
                         transfer='sigmoid', inference='mKosko', thresh=0.001, iterations=50, l=1)
 ```
 
-```Python
+```python
 Output[6]
 
 The values converged in the 7 state (e <= 0.001)
@@ -321,7 +320,7 @@ This should already be familiar from the previous example. Here we just run a si
 Now we can specify the interventions that we want to test.
 Let's consider three such hypothetical interventions we wish to test in our FCM. The first intervention targets concepts (nodes) C1 and C2. It negatively impacts concept C1 (-.3) while positively impacting the concept C2 (.5). We consider a case where the intervention has maximum effectiveness (1). The other two interventions follow the same logic but impact other nodes (see below). 
 
-```Python
+```python
 inter.add_intervention('intervention_1', impact={'C1':-.3, 'C2' : .5}, effectiveness=1)
 inter.add_intervention('intervention_2', impact={'C4':-.5}, effectiveness=1)
 inter.add_intervention('intervention_3', impact={'C5':-1}, effectiveness=1)
@@ -329,13 +328,13 @@ inter.add_intervention('intervention_3', impact={'C5':-1}, effectiveness=1)
 
 Now we can use the FcmIntervention.test_intervention() method to test the intervention cases.
 
-```Python
+```python
 inter.test_intervention('intervention_1')
 inter.test_intervention('intervention_2')
 inter.test_intervention('intervention_3')
 ```
 
-```Python
+```python
 Output[6]
 
 The values converged in the 6 state (e <= 0.001)
@@ -345,7 +344,7 @@ The values converged in the 6 state (e <= 0.001)
 
 We can look at the results of the simulation runs of each intervention case as follows:
 
-```Python
+```python
 inter.test_results['intervention_1']
 ```
 
@@ -404,5 +403,3 @@ C8       0.0       -0.117365       -0.036331       -0.374038
 ## License
 
 Please read LICENSE.txt in this directory.
-
-</div>
