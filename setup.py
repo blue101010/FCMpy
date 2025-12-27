@@ -1,16 +1,37 @@
+from pathlib import Path
 import setuptools
 
-def readme():
-    with open("README.md", "r") as fh:
+
+def readme() -> str:
+    with open("README.md", "r", encoding="utf-8") as fh:
         return fh.read()
 
 
-with open('requirements.txt') as fid:
-    INSTALL_REQUIRES = []
-    for line in fid.readlines():
-        if line == '' or line[0] == '#' or line[0].isspace():
+def parse_requirements(requirements_file: str) -> list[str]:
+    requirements: list[str] = []
+    for line in Path(requirements_file).read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
             continue
-        INSTALL_REQUIRES.append(line.strip())
+        requirements.append(line)
+    return requirements
+
+
+INSTALL_REQUIRES = parse_requirements("requirements.txt")
+
+extras_require = {
+    "ml": [
+        "scikit-learn>=1.5",
+    ],
+    "viz": [
+        "matplotlib>=3.9",
+        "seaborn>=0.13",
+    ],
+    "ml-tf": [
+        "tensorflow>=2.17; python_version < '3.13'",
+    ],
+}
+extras_require["all"] = sorted({pkg for group in extras_require.values() for pkg in group})
 
 setuptools.setup(
     name="fcmpy",
@@ -27,6 +48,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8.1',
-    install_requires=INSTALL_REQUIRES
+    python_requires='>=3.9',
+    install_requires=INSTALL_REQUIRES,
+    extras_require=extras_require,
 )

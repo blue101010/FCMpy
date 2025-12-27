@@ -24,21 +24,45 @@ Read more about the package at: https://arxiv.org/abs/2111.12749
 Tutorials and documentation can be found at: https://maxiuw.github.io/fcmpyhtml
 
 ## Installation
-FCMpy requires python >=3.8.1 (*) and depends on:
 
-* pandas>=1.0.3
-* numpy>=numpy==1.18.2
-* scikit-fuzzy>=0.4.2
-* tqdm>=4.50.2
-* openpyxl
+FCMpy supports Python 3.9 and newer (validated up to Python 3.14). The core library keeps its dependency surface intentionally small so that the default installation succeeds on bleeding-edge interpreters:
 
-(*) we tested our library on Python 3.8. Some of the dependencies (e.g. Tensorflow) may not work properly if you use higher version of Python. Therefore, we encourage users to create a virtual environment (e.g. Conda env) with Python 3.8 and then _pip install_ our package.
+* numpy>=2.1
+* pandas>=2.2
+* scipy>=1.14
+* scikit-fuzzy>=0.5.0
+* tqdm>=4.66
+* openpyxl>=3.1
 
-FCMpy is available on PyPi! The latest version can be installed by:
+Additional functionality lives behind optional extras:
+
+* `pip install "fcmpy[ml]"` &rarr; scikit-learn powered classifiers (`FCM_MP`, parts of `eltcn`).
+* `pip install "fcmpy[viz]"` &rarr; plotting helpers based on matplotlib/seaborn.
+* `pip install "fcmpy[ml-tf]"` &rarr; TensorFlow-backed ELTCN classifier (requires a Python version supported by TensorFlow).
+* `pip install "fcmpy[all]"` &rarr; everything above.
+
+FCMpy is available on PyPI:
 
 ```
 pip install fcmpy
 ```
+
+### One-command launcher (recommended for local development)
+
+To avoid manual environment management on Python 3.14, use the bundled launcher:
+
+```
+python launcher.py --extras ml viz -- --your --fcpm-args
+```
+
+The script will
+
+1. create/update `.venv`,
+2. install `requirements.txt` (and optional extras if requested),
+3. install the project in editable mode,
+4. execute `fcpm_py.py` so you can iterate on the sample scenario.
+
+Pass `--skip-run` to only prepare the environment or `--no-editable` if you just need dependencies for external tooling.
 
 Alternatively, you can install it from source or develop this package, you can fork and clone this repository then install FCMpy by running:
 

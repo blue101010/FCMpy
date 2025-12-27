@@ -7,20 +7,28 @@ Gonzalo Nápoles a,b,⇑, Agnieszka Jastrze˛bska c, Yamisleydi Salgueiro d
 
 import numpy as np
 import pandas as pd
-import tensorflow as tf
-from sklearn import datasets
-from sklearn import model_selection
-from sklearn.utils import shuffle
-from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import accuracy_score
-from tensorflow.keras import backend as K
-from tensorflow.python.keras.backend import set_session
-from tensorflow.keras import regularizers
-import matplotlib.pyplot as plt
 from scipy.stats import entropy
 from math import log, e
-import os 
+import os
 import warnings
+
+try:
+    import tensorflow as tf
+    from tensorflow.keras import backend as K
+    from tensorflow.keras import regularizers
+except ImportError as exc:
+    raise ImportError(
+        "TensorFlow is required for the ELTCN classifier. Install the optional dependencies via "
+        "`pip install \"fcmpy[ml-tf]\"` and rerun."
+    ) from exc
+
+try:
+    from sklearn.model_selection import StratifiedKFold
+except ImportError as exc:
+    raise ImportError(
+        "scikit-learn is required for the ELTCN classifier. Install it with `pip install \"fcmpy[ml]\"`."
+    ) from exc
+
 warnings.filterwarnings("ignore")
 
 
@@ -121,6 +129,15 @@ def plot_loss_weights(history, model, mask):
     :param mask:
     :return:
     '''
+    try:
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+    except ImportError as exc:
+        raise ImportError(
+            "Plotting requires the optional visualization dependencies. Install them via "
+            "`pip install \"fcmpy[viz]\"` or set verbose=False."
+        ) from exc
+
     fig1, axes1 = plt.subplots(figsize=(15,5))
     fig2, axes2 = plt.subplots(figsize=(15,5))
         
@@ -141,7 +158,6 @@ def plot_loss_weights(history, model, mask):
             header.append('w'+str(i+1)+str(j+1)+"*" if (mask[i,j] != 0) else 'w'+str(i+1)+str(j+1))
             
     df.columns = header
-    import seaborn as sns
     axes2 = sns.boxplot(data=df)
     axes2.set_title('weights')
     axes2.set(ylabel='value across layers', xlabel='weight')

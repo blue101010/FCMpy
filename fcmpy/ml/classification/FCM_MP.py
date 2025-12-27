@@ -7,8 +7,13 @@ Władysław Homenda c
 
 """
 from scipy.io import arff
-from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import mean_squared_error
+try:
+    from sklearn.model_selection import StratifiedKFold
+    from sklearn.metrics import mean_squared_error
+except ImportError as exc:
+    raise ImportError(
+        "scikit-learn is required for the FCM_MP classifier. Install it with `pip install \"fcmpy[ml]\"`."
+    ) from exc
 from datetime import datetime
 import numpy as np
 import pandas as pd

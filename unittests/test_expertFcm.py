@@ -4,7 +4,6 @@ from fcmpy.expert_fcm.expert_based_fcm import ExpertFcm
 import itertools
 import collections
 import pandas as pd 
-import xlrd
 import warnings
 import functools
 import numpy as np
