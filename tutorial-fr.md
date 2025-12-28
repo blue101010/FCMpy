@@ -22,7 +22,7 @@ fournit des outils pour :
 FCMpy fonctionne avec Python 3.9 ou plus recent (teste jusqu a 3.14).
 Deux approches sont proposees :
 
-### 2.1 Via PyPI (attention au compatibilités de packages)
+### 2.1 Via PyPI (attention aux compatibilités de packages)
 
 ```bash
 pip install fcmpy
