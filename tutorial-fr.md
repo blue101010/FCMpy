@@ -34,7 +34,7 @@ Ajoutez des dépendances optionnelles si nécessaire :
 - `pip install "fcmpy[viz]"` -> graphiques matplotlib/seaborn;
 - `pip install "fcmpy[ml-tf]"` -> classifier ELTCN basé sur TensorFlow.
 
-### 2.2 Via le lanceur fourni (recommendé python 3.14)
+### 2.2 Via le lanceur fourni (recommandé python 3.14)
 
 A la racine du depot, executez :
 
@@ -162,8 +162,7 @@ print(inter.equilibriums)
 
 ## 6. Ressources complementaires
 
-- Documentation anglaise : https://maxiuw.github.io/fcmpyhtml
-- Article de reference : https://arxiv.org/abs/2111.12749
+- Documentation anglaise : <https://maxiuw.github.io/fcmpyhtml>
+- Article de reference : <https://arxiv.org/abs/2111.12749>
 - Tutoriels unit tests : `unittests/`
 
-Bon apprentissage !
